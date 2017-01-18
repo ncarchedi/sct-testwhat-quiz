@@ -197,9 +197,14 @@ for (ii in 1:10) if (ii > 1) ii else 0
 
 *** =sct
 ```{r}
-# TODO: come back to this - need to figure out nesting in the new system :(
+# TODO: didn't have time to finish this one - need to figure out nesting in the new system :(
 
-f <- ex() %>% check_for()
+test_for_loop(
+  cond_test = test_or(test_student_typed("in 1:10", not_typed_msg = "bad cond test")),
+  expr_test = test_if_else(
+    if_cond_test = test_student_typed("> 1", not_typed_msg = "bad if test")
+  )
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:72a629a74f
@@ -314,7 +319,7 @@ test_function_definition("f",
                          },
                          body_test = {
                            test_student_typed("+", not_typed_msg = "no + operator")
-                           test_function("sum", not_called_msg = "no sum call")
+                           test_function("sum", not_called_msg = "no sum call") # <-- why isn't this working?
                          },
                          incorrect_number_arguments_msg = "missing 3rd arg" # hack
 )
@@ -405,7 +410,7 @@ lapply(df, sum)
 
 *** =sct
 ```{r}
-# TODO: Why is fail 3 not correct?
+# TODO: Why is the incorrect message for fail 3 not correct?
 
 test_correct({
   test_output_contains("lapply(df, sum)")
