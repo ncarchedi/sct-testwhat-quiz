@@ -139,11 +139,11 @@ f("b")
 
 *** =sct
 ```{r}
-# Use only a check_code SCT
-ex() %>% 
-  check_code(c("f('blue')", "f('b')"), fixed = TRUE,
-             missing_msg = "should call `f('blue')` or `f('b')`")
-             
+test_or(
+  test_student_typed("f('b')"),
+  test_student_typed("f('blue')") # need more time to get clever on this one
+)
+
 # NOTE: This is checking knowledge of regex more than knowledge of check_code()
 ```
 
@@ -254,6 +254,7 @@ inc_msg <- paste("bad value for", cols)
 und_msg <- paste("missing col", cols)
 test_data_frame("d", columns = cols,
                 undefined_msg = "d is undefined",
+                incorrect_msg = inc_msg,
                 undefined_cols_msg = und_msg)
 ```
 
@@ -305,16 +306,17 @@ f <- function(a, b, c=1) sum(a + b, c)
 
 *** =sct
 ```{r}
-# TODO: come back to this, not working as expected...
+# TODO: come back to this, not working as expected?
 
 test_function_definition("f",
                          function_test = {
-                           test_expression_result(f(1, 2, 3))
+                           test_expression_result("f(1, 2, 3)")
                          },
                          body_test = {
-                           test_student_typed("+")
-                           test_student_typed("sum")
-                         }
+                           test_student_typed("+", not_typed_msg = "no + operator")
+                           test_function("sum", not_called_msg = "no sum call")
+                         },
+                         incorrect_number_arguments_msg = "missing 3rd arg" # hack
 )
 ```
 
@@ -350,10 +352,11 @@ lm(x ~ y, data=d)
 
 *** =sct
 ```{r}
-test_function("lm")
-test_student_typed("x")
-test_student_typed("y")
-test_student_typed("~")
+test_or(
+  test_output_contains("lm(x ~ y, data = d)"),
+  test_output_contains("lm(d$x ~ d$y)"),
+  test_output_contains("with(d, lm(x ~ y))")
+)
 ```
 
 
