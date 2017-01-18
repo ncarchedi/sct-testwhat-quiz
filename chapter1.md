@@ -197,6 +197,9 @@ for (ii in 1:10) if (ii > 1) ii else 0
 
 *** =sct
 ```{r}
+# TODO: come back to this - need to figure out nesting in the new system :(
+
+f <- ex() %>% check_for()
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:72a629a74f
@@ -244,6 +247,14 @@ d$ttl <- d$x + d$y
 
 *** =sct
 ```{r}
+# TODO: come back to this - not vectorizing feedback messages?
+
+cols <- c("x", "y", "ttl")
+inc_msg <- paste("bad value for", cols)
+und_msg <- paste("missing col", cols)
+test_data_frame("d", columns = cols,
+                undefined_msg = "d is undefined",
+                undefined_cols_msg = und_msg)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:631d01c691
@@ -294,6 +305,17 @@ f <- function(a, b, c=1) sum(a + b, c)
 
 *** =sct
 ```{r}
+# TODO: come back to this, not working as expected...
+
+test_function_definition("f",
+                         function_test = {
+                           test_expression_result(f(1, 2, 3))
+                         },
+                         body_test = {
+                           test_student_typed("+")
+                           test_student_typed("sum")
+                         }
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7839a0890c
