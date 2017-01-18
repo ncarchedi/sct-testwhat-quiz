@@ -114,7 +114,7 @@ f('b')
 f("blueberry")
 ```
 
-#### fail 2 - "should cal f('blue') or f('b')"
+#### fail 2 - "should call f('blue') or f('b')"
 
 ```
 pf("blue")
@@ -140,8 +140,11 @@ f("b")
 *** =sct
 ```{r}
 # Use only a check_code SCT
-
-
+ex() %>% 
+  check_code(c("f('blue')", "f('b')"), fixed = TRUE,
+             missing_msg = "should call `f('blue')` or `f('b')`")
+             
+# NOTE: This is checking knowledge of regex more than knowledge of check_code()
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:69cbf4cfc4
