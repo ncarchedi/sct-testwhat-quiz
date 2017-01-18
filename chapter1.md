@@ -350,6 +350,10 @@ lm(x ~ y, data=d)
 
 *** =sct
 ```{r}
+test_function("lm")
+test_student_typed("x")
+test_student_typed("y")
+test_student_typed("~")
 ```
 
 
@@ -398,6 +402,17 @@ lapply(df, sum)
 
 *** =sct
 ```{r}
+# TODO: Why is fail 3 not correct?
+
+test_correct({
+  test_output_contains("lapply(df, sum)")
+  }, {
+  pos <- c("first", "second")
+  test_function("lapply", args = c("X", "FUN"), 
+                args_not_specified_msg = paste("missing", pos, "pos arg"),
+                incorrect_msg = paste("incorrect", pos, "pos arg")
+  )
+})
 ```
 --- type:NormalExercise lang:r xp:100 skills:1 key:2564475b6e
 ## Logic Test
